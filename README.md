@@ -232,6 +232,19 @@ If your SPI display has a different resolution than 320x240, change the `320 240
 
 These lines hint native applications about the default display mode, and let them render to the native resolution of the TFT display. This can however prevent the use of the HDMI connector, if the HDMI connected display does not support such a small resolution. As a compromise, if both HDMI and SPI displays want to be used at the same time, some other compatible resolution such as 640x480 can be used. See [Raspberry Pi HDMI documentation](https://www.raspberrypi.org/documentation/configuration/config-txt/video.md) for the available options to do this.
 
+##### Native Resolution using Pirate Audio
+
+Append "/opt/retropie/configs/nes/retroarch.cfg":
+```
+video_fullscreen_x = "0"
+video_fullscreen_y = "0"
+video_scale_integer = true
+```
+Append "/opt/retropie/configs/all/retroarch-core-options.cfg":
+```
+quicknes_use_overscan_h = "disabled"
+```
+
 ##### Tuning Performance
 
 The refresh speed of the display is dictated by the clock speed of the SPI bus that the display is connected to. Due to the way the BCM2835 chip on Raspberry Pi works, there does not exist a simple `speed=xxx Mhz` option that could be set to define the bus speed. Instead, the SPI bus speed is derived from two separate parameters: the core frequency of the BCM2835 SoC in general (`core_freq` in `/boot/config.txt`), and the SPI peripheral `CDIV` (Clock DIVider) setting. Together, the resulting SPI bus speed is then calculated with the formula `SPI_speed=core_freq/CDIV`.
